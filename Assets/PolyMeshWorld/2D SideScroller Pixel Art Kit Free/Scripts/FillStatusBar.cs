@@ -9,6 +9,7 @@ public class FillStatusBar : MonoBehaviour
     public PlayerHealth playerHealth;
     public Image fillImage;
     private Slider slider;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -18,6 +19,7 @@ public class FillStatusBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        float fillValue=playerHealth.currentHealth/playerHealth.maxHealth;
+        slider.value = fillValue;
     }
 }
