@@ -4,8 +4,18 @@ using UnityEngine;
 
 public class WaterEnemy : MonoBehaviour
 {
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // Check if the colliding object has a PlayerHealth component
+        PlayerHealth playerHealth = collision.GetComponent<PlayerHealth>();
+
         Debug.Log("WATER");
+        // If the colliding object has PlayerHealth, call the Die() method
+        if (playerHealth != null)
+        {
+            playerHealth.Die();
+        }
     }
 }
