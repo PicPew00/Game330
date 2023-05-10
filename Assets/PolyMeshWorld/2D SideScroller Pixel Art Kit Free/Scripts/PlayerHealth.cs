@@ -21,10 +21,17 @@ public class PlayerHealth : MonoBehaviour
 
         if (currentHealth <= 0) {
 
-            Debug.Log("Death");
+            Die();
 
 
         }
     
+    }
+
+    public void Die()
+    {
+        // Handle player death here
+        Debug.Log("Player has died.");
+        // You can add more functionality like game over screen, respawning, etc.
     }
 }

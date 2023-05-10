@@ -19,7 +19,7 @@ public class FillStatusBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float fillValue=playerHealth.currentHealth/playerHealth.maxHealth;
+        float fillValue = (float)playerHealth.currentHealth / playerHealth.maxHealth;
         slider.value = fillValue;
     }
 }
