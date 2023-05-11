@@ -6,12 +6,15 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] int maxJumpsToPerfom;
-
     [SerializeField] float speed = 20.0f;
+    [SerializeField] SpriteRenderer spriteRenderer;
+   // [SerializeField] float rotationSpeed = 200.0f;
+
     public float jumpForce = 100.0f;
     private float horizontalInput;
     private float verticalInput;
     private float forwardInput;
+    
 
 
     bool isOnLadder = false;
@@ -19,7 +22,8 @@ public class PlayerController : MonoBehaviour
 
     int currentNumberOfJumpsToPerfom;
 
-    Rigidbody2D rigidbody;
+    new Rigidbody2D rigidbody;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,16 +32,29 @@ public class PlayerController : MonoBehaviour
         currentNumberOfJumpsToPerfom = 0;
     }
 
+    
+
     // Update is called once per frame
     void FixedUpdate()
     {
-
         // Read horizontal input
         horizontalInput = Input.GetAxis("Horizontal");
+
         // Move the player left or right
         transform.Translate(Vector3.right * Time.deltaTime * speed * horizontalInput);
 
+        // Rotate the character's sprite to face left when the left arrow is pressed
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            spriteRenderer.flipX = true;
+        }
+        else if (Input.GetKey(KeyCode.RightArrow))
+        {
+            spriteRenderer.flipX = false;
+        }
     }
+
+
 
     private void Update()
     {
