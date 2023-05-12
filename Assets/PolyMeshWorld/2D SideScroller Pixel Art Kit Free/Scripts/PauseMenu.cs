@@ -5,64 +5,71 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    // Start is called before the first frame update
-
-    public static bool GameIsPaused=false;
-
+    public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
 
-    // Update is called once per frame
+    private bool playerIsDead = false;
+
     void Update()
     {
-
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-
-            if (GameIsPaused) {
-
+            if (GameIsPaused && !playerIsDead)
+            {
                 Resume();
-
             }
             else
             {
-
                 Pause();
             }
-
         }
-        
-        
     }
 
     void Pause()
     {
-
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
-
-
     }
 
-    public void Resume() { 
-    
-    pauseMenuUI.SetActive(false);
+    public void Resume()
+    {
+        pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
-    
-    
     }
 
-    public void LoadMenu() {
+    public void Restart()
+    {
         Time.timeScale = 1f;
-
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void QuitGame() {
-
-
+    public void QuitGame()
+    {
         Debug.Log("Quitting game");
         Application.Quit();
     }
 
+    public void ShowPauseMenu()
+    {
+        if (!GameIsPaused && !playerIsDead)
+        {
+            pauseMenuUI.SetActive(true);
+            Time.timeScale = 0f;
+            GameIsPaused = true;
+        }
+    }
+
+    public void SetPlayerDead(bool isDead)
+    {
+        playerIsDead = isDead;
+        if (playerIsDead)
+        {
+            // Hide the resume button when the player is dead
+            // Assuming you have a "Resume" button in the pauseMenuUI game object
+            GameObject resumeButton = pauseMenuUI.transform.Find("ResumeBtn").gameObject;
+            resumeButton.SetActive(false);
+        }
+    }
 }
