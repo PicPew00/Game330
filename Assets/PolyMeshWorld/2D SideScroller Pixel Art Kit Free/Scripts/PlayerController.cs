@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -13,7 +14,10 @@ public class PlayerController : MonoBehaviour
     private float verticalInput;
     private float forwardInput;
 
+    public List<BoxCollider2D> boxCollider2Ds = new List<BoxCollider2D>();
 
+
+    public bool isGrounded1 = false;
     bool isOnLadder = false;
     bool isGrounded;
 
@@ -93,11 +97,33 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.gameObject.tag == "Ground")
+        if(collision.collider.CompareTag("Ground"))
         {
+            if (boxCollider2Ds[1].IsTouching(collision.collider))
+            {
+                isGrounded1 = true;
+                currentNumberOfJumpsToPerfom = 0;
+            }
+          
+        }
 
-            currentNumberOfJumpsToPerfom = 0;
+        
 
+
+        //if (collision.CompareTag("Ground"))
+        //{
+
+        //    //isGrounded1 = true;
+        //    //currentNumberOfJumpsToPerfom = 0;
+        //}
+
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Ground"))
+        {
+            isGrounded1 = false;
         }
 
     }
