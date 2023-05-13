@@ -1,4 +1,7 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -16,30 +19,20 @@ public class PlayerHealth : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        if (isDead)
+            return;
+
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            TakeDamage(30);
+            takeDamage(30);
         }
         else if (collision.gameObject.CompareTag("Spike"))
         {
-            TakeDamage(80);
+            takeDamage(80);
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Projectile"))
-        {
-            Projectile projectile = collision.gameObject.GetComponent<Projectile>();
-            if (projectile != null)
-            {
-                TakeDamage(projectile.damageAmount);
-                Destroy(projectile.gameObject); // Destroy the projectile on collision
-            }
-        }
-    }
-
-    public void TakeDamage(int amount)
+    void takeDamage(int amount)
     {
         currentHealth -= amount;
 
@@ -54,8 +47,9 @@ public class PlayerHealth : MonoBehaviour
         isDead = true;
         // Handle player death here
         Debug.Log("Player has died.");
-        transform.Rotate(Vector3.forward, 90f);
+        transform.Rotate(Vector3.forward, -90f);
         // Show pause menu
+
         pauseMenu.ShowPauseMenu();
         pauseMenu.SetPlayerDead(true);
         // You can add more functionality like a game over screen, respawning, etc.
