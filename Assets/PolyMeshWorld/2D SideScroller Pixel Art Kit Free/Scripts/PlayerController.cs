@@ -9,13 +9,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] int maxJumpsToPerfom;
     [SerializeField] float speed = 20.0f;
     [SerializeField] SpriteRenderer spriteRenderer;
-   // [SerializeField] float rotationSpeed = 200.0f;
-
+    // [SerializeField] float rotationSpeed = 200.0f;
+    public GameObject projectilePrefab;
     public float jumpForce = 100.0f;
     private float horizontalInput;
     private float verticalInput;
     private float forwardInput;
-    
+    public float projectileSpeed = 10f;
 
     public List<BoxCollider2D> boxCollider2Ds = new List<BoxCollider2D>();
 
@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
         currentNumberOfJumpsToPerfom = 0;
     }
 
-    
+
 
     // Update is called once per frame
     void FixedUpdate()
@@ -45,7 +45,10 @@ public class PlayerController : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
 
         // Move the player left or right
-        transform.Translate(Vector3.right * Time.deltaTime * speed * horizontalInput);
+        if (!Input.GetKey(KeyCode.E) && !Input.GetKeyDown(KeyCode.E)) // Apply translation only when not firing or just starting to fire a projectile
+        {
+            rigidbody.velocity = new Vector2(speed * horizontalInput, rigidbody.velocity.y);
+        }
 
         // Rotate the character's sprite to face left when the left arrow is pressed
         if (Input.GetKey(KeyCode.LeftArrow))
@@ -60,6 +63,9 @@ public class PlayerController : MonoBehaviour
 
 
 
+
+
+    private Vector3 projectileSpawnOffset = new Vector3(0.5f, 0f, 0f); // Offset from player's position to spawn the projectile
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && currentNumberOfJumpsToPerfom < maxJumpsToPerfom)
@@ -76,6 +82,38 @@ public class PlayerController : MonoBehaviour
         }
 
         GoingUpOnLadder();
+
+
+
+
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            // Store the direction based on player's flipX value
+            Vector2 throwDirection = spriteRenderer.flipX ? -transform.right : transform.right;
+
+            // Calculate the spawn position of the projectile
+            Vector3 projectileSpawnPosition = transform.position + (spriteRenderer.flipX ? -projectileSpawnOffset : projectileSpawnOffset);
+
+            // Launch a projectile from the calculated spawn position
+            GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPosition, Quaternion.Euler(0f, 0f, 90f));
+            Rigidbody2D projectileRigidbody = projectile.GetComponent<Rigidbody2D>();
+
+            // Set the initial position of the projectile relative to the player
+            projectile.transform.position += (Vector3)throwDirection.normalized * 0.5f;
+
+            projectileRigidbody.AddForce(throwDirection * projectileSpeed, ForceMode2D.Impulse);
+        }
+
+
+
+
+
+
+
+
+
+
     }
     private void GoingUpOnLadder()
     {
@@ -144,6 +182,9 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+
+
+
 
 }
 
