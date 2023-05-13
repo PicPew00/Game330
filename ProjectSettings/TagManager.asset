@@ -13,6 +13,9 @@ TagManager:
   - Head
   - Projectile
   - CharacterProjectile
+  - Obstacle
+  - Spike Obstacle
+  - Tile
   layers:
   - Default
   - TransparentFX
