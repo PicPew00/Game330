@@ -11,6 +11,8 @@ TagManager:
   - Spike
   - Coin
   - Head
+  - Projectile
+  - CharacterProjectile
   layers:
   - Default
   - TransparentFX

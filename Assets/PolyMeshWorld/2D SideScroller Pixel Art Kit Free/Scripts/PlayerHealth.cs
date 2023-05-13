@@ -20,7 +20,7 @@ public class PlayerHealth : MonoBehaviour
         {
             TakeDamage(30);
         }
-        else if (collision.gameObject.CompareTag("Spike"))
+        else if (collision.gameObject.CompareTag("Spike") || collision.gameObject.CompareTag("Spike Obstacle"))
         {
             TakeDamage(80);
         }
