@@ -49,7 +49,7 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("Player has died.");
         transform.Rotate(Vector3.forward, -90f);
         // Show pause menu
-        
+
         pauseMenu.ShowPauseMenu();
         pauseMenu.SetPlayerDead(true);
         // You can add more functionality like a game over screen, respawning, etc.
