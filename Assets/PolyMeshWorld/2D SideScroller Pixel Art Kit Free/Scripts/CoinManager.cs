@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class CoinManager : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        Destroy(this.gameObject);
+        if (collision.collider.CompareTag("Head"))
+        {
+            Debug.Log("COIN OUT");
+        }
     }
 }

@@ -9,6 +9,8 @@ TagManager:
   - Enemy
   - Platform
   - Spike
+  - Coin
+  - Head
   layers:
   - Default
   - TransparentFX

@@ -39,9 +39,11 @@ public class PauseMenu : MonoBehaviour
         GameIsPaused = false;
     }
 
-    public void Restart()
+    public void Restart2()
     {
         Time.timeScale = 1f;
+        pauseMenuUI.SetActive(false);
+        playerIsDead = false; // Reset the playerIsDead flag
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -53,7 +55,7 @@ public class PauseMenu : MonoBehaviour
 
     public void ShowPauseMenu()
     {
-        if (!GameIsPaused && !playerIsDead)
+        if (!playerIsDead)
         {
             pauseMenuUI.SetActive(true);
             Time.timeScale = 0f;
