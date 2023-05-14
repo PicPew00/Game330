@@ -4,14 +4,21 @@ public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 100;
     public int currentHealth;
+    public int score;
+
+    public int Score { get { return score; } } // Public getter for score
 
     private bool isDead = false;
 
     public PauseMenu pauseMenu;
 
+    private CoinCountUI coinCountUI;
+
     void Start()
     {
         currentHealth = maxHealth;
+        score = 0;
+        coinCountUI = GameObject.Find("CoinCountUI").GetComponent<CoinCountUI>();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -37,6 +44,10 @@ public class PlayerHealth : MonoBehaviour
                 Destroy(projectile.gameObject); // Destroy the projectile on collision
             }
         }
+        else if (collision.gameObject.CompareTag("Coins"))
+        {
+            CollectCoin(collision.gameObject);
+        }
     }
 
     public void TakeDamage(int amount)
@@ -59,5 +70,20 @@ public class PlayerHealth : MonoBehaviour
         pauseMenu.ShowPauseMenu();
         pauseMenu.SetPlayerDead(true);
         // You can add more functionality like a game over screen, respawning, etc.
+    }
+
+    public void CollectCoin(GameObject coin)
+    {
+        // Destroy the coin object
+        Destroy(coin);
+
+        // Add 10 points to the score
+        score += 10;
+
+        // Update the coin count UI
+        coinCountUI.UpdateCoinCountUI();
+
+        // Display the current coin count in the console
+        Debug.Log("Current coin count: " + score);
     }
 }

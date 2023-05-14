@@ -17,6 +17,7 @@ TagManager:
   - Spike Obstacle
   - Tile
   - EnemyReverse
+  - Coins
   layers:
   - Default
   - TransparentFX
