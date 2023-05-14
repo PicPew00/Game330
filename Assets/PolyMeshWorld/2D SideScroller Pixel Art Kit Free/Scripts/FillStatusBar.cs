@@ -23,3 +23,4 @@ public class FillStatusBar : MonoBehaviour
         slider.value = fillValue;
     }
 }
+

@@ -11,7 +11,7 @@ public class WaterEnemy : MonoBehaviour
         // Check if the colliding object has a PlayerHealth component
         PlayerHealth playerHealth = collision.GetComponent<PlayerHealth>();
 
-        Debug.Log("WATER");
+     
         // If the colliding object has PlayerHealth, call the Die() method
         if (playerHealth != null)
         {

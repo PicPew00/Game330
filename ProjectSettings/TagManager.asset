@@ -11,6 +11,13 @@ TagManager:
   - Spike
   - Coin
   - Head
+  - Projectile
+  - CharacterProjectile
+  - Obstacle
+  - Spike Obstacle
+  - Tile
+  - EnemyReverse
+  - Coins
   layers:
   - Default
   - TransparentFX

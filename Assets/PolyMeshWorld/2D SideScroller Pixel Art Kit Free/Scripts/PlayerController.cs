@@ -63,7 +63,8 @@ public class PlayerController : MonoBehaviour
 
 
 
-
+    private bool isPassingThrough = false;
+    private PlatformEffector2D platformEffector;
 
     private Vector3 projectileSpawnOffset = new Vector3(0.5f, 0f, 0f); // Offset from player's position to spawn the projectile
     private void Update()
@@ -83,7 +84,12 @@ public class PlayerController : MonoBehaviour
 
         GoingUpOnLadder();
 
-
+        if (isPassingThrough)
+        {
+            // Disable the platform effector to stop passing through
+            platformEffector.rotationalOffset = 0;
+            isPassingThrough = false;
+        }
 
 
 
@@ -121,7 +127,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.UpArrow) && isOnLadder)
         {
 
-            Debug.Log("onladderrr....");
+            Debug.Log("On Ladder ");
             rigidbody.gravityScale = 0f;
             transform.Translate(Vector3.up * Time.deltaTime * speed * verticalInput);
             //TRANSLATE THE PLAYER UP ( MOVING 1.0 tile at the time )
@@ -161,8 +167,31 @@ public class PlayerController : MonoBehaviour
             }
           
         }
-
         
+            if (collision.gameObject.CompareTag("Obstacle"))
+            {
+                // Get the colliders involved in the collision
+                Collider2D characterCollider = GetComponent<Collider2D>();
+                Collider2D obstacleCollider = collision.collider;
+
+                // Ignore collision between character and obstacle colliders
+                Physics2D.IgnoreCollision(characterCollider, obstacleCollider);
+            }
+        
+
+       
+            if (collision.gameObject.CompareTag("Obstacle"))
+            {
+                // Get the colliders involved in the collision
+                Collider2D characterCollider = GetComponent<Collider2D>();
+                Collider2D obstacleCollider = collision.collider;
+
+                // Re-enable collision between character and obstacle colliders
+                Physics2D.IgnoreCollision(characterCollider, obstacleCollider, false);
+            }
+        
+
+
 
 
         //if (collision.CompareTag("Ground"))
