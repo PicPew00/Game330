@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.UpArrow) && isOnLadder)
         {
 
-            Debug.Log("onladderrr....");
+            Debug.Log("On Ladder ");
             rigidbody.gravityScale = 0f;
             transform.Translate(Vector3.up * Time.deltaTime * speed * verticalInput);
             //TRANSLATE THE PLAYER UP ( MOVING 1.0 tile at the time )

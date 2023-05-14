@@ -70,14 +70,21 @@ public class EnemyMovement : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
-
     {
         // Check if the collision object has the "Obstacle" tag
-        if (collision.gameObject.CompareTag("Obstacle") || collision.gameObject.CompareTag("Spike Obstacle") && !isReversingDirection)
+        if ((collision.gameObject.CompareTag("Obstacle") || collision.gameObject.CompareTag("Spike Obstacle")) && !isReversingDirection)
         {
             // Reverse the direction
             StartCoroutine(ReverseDirection());
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ladder") || collision.gameObject.CompareTag("EnemyReverse") && !isReversingDirection)
+        {
+            // Reverse the direction
+            StartCoroutine(ReverseDirection());
+        }
+    }
 }

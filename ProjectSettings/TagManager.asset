@@ -16,6 +16,7 @@ TagManager:
   - Obstacle
   - Spike Obstacle
   - Tile
+  - EnemyReverse
   layers:
   - Default
   - TransparentFX
