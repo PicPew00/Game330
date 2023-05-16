@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
         // Move the player left or right
         if (!Input.GetKey(KeyCode.E) && !Input.GetKeyDown(KeyCode.E)) // Apply translation only when not firing or just starting to fire a projectile
         {
-            rigidbody.velocity = new Vector2(speed * horizontalInput, rigidbody.velocity.y);
+            transform.position += Vector3.right * horizontalInput * Time.deltaTime * speed;
         }
 
         // Rotate the character's sprite to face left when the left arrow is pressed
