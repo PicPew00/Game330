@@ -14,7 +14,12 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (GameIsPaused && !playerIsDead)
+            if (playerIsDead)
+            {
+                return;
+            }
+
+            if (GameIsPaused)
             {
                 Resume();
             }
@@ -73,5 +78,11 @@ public class PauseMenu : MonoBehaviour
             GameObject resumeButton = pauseMenuUI.transform.Find("ResumeBtn").gameObject;
             resumeButton.SetActive(false);
         }
+    }
+
+    public void MainMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MenuScene"); 
     }
 }
