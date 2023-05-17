@@ -1,9 +1,12 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BoxController : MonoBehaviour
 {
     public GameObject coinPrefab;
-    public int numCoins = 10;
+    public GameObject heartPrefab;
+    public int numCoins = 2;
+    public int numHearts = 1;
     public float popUpForce = 5f;
     public float popUpDelay = 0.1f;
     public float boxLifetime = 3f;
@@ -16,43 +19,63 @@ public class BoxController : MonoBehaviour
         if (!isHit)
         {
             isHit = true;
-            InvokeRepeating("PopUpCoin", 0f, popUpDelay);
+            InvokeRepeating("PopUpItem", 0f, popUpDelay);
             Invoke("DestroyBox", boxLifetime);
         }
     }
 
-    private Vector3 previousCoinPosition; // Track the position of the previously spawned coin
+    private Vector3 previousItemPosition; // Track the position of the previously spawned item
     private bool spawnToRight = true; // Flag to alternate between left and right spawning
 
-    private void PopUpCoin()
+    private void PopUpItem()
     {
-        if (isHit && numCoins > 0)
+        if (isHit && (numCoins > 0 || numHearts > 0))
         {
-            float spawnOffset = spawnToRight ? 3f : -3.7f; // Adjust the gap between coins as desired (20cm = 0.2f)
+            float spawnOffset = spawnToRight ? 0.5f : -0.2f; // Adjust the gap between items as desired (20cm = 0.2f)
             Vector3 spawnPosition = transform.position + new Vector3(spawnOffset, 0f, 0f);
 
-            if (numCoins < 10)
+            if (numCoins > 0 && numHearts > 0)
             {
-                spawnPosition = previousCoinPosition + new Vector3(spawnOffset, 0f, 0f);
+                if (Random.value < 0.5f)
+                {
+                    SpawnCoin(spawnPosition);
+                    numCoins--;
+                    Debug.Log("1");
+                }
+                else
+                {
+                    SpawnHeart(spawnPosition);
+                    numHearts--;
+                    Debug.Log("2");
+                }
             }
+           
 
-            GameObject coin = Instantiate(coinPrefab, spawnPosition, Quaternion.identity);
-            Rigidbody2D coinRb = coin.GetComponent<Rigidbody2D>();
-            Vector2 randomDirection = Random.insideUnitCircle.normalized;
-            coinRb.AddForce(randomDirection * popUpForce, ForceMode2D.Impulse);
-
-            previousCoinPosition = spawnPosition; // Update the previous coin position
+            previousItemPosition = spawnPosition; // Update the previous item position
             spawnToRight = !spawnToRight; // Toggle the spawn direction
 
-            numCoins--;
-            if (numCoins <= 0)
+            if (numCoins <= 0 && numHearts <= 0)
             {
-                CancelInvoke("PopUpCoin");
+                CancelInvoke("PopUpItem");
             }
         }
     }
 
+    private void SpawnCoin(Vector3 spawnPosition)
+    {
+        GameObject coin = Instantiate(coinPrefab, spawnPosition, Quaternion.identity);
+        Rigidbody2D coinRb = coin.GetComponent<Rigidbody2D>();
+        Vector2 randomDirection = Random.insideUnitCircle.normalized;
+        coinRb.AddForce(randomDirection * popUpForce, ForceMode2D.Impulse);
+    }
 
+    private void SpawnHeart(Vector3 spawnPosition)
+    {
+        GameObject heart = Instantiate(heartPrefab, spawnPosition, Quaternion.identity);
+        Rigidbody2D heartRb = heart.GetComponent<Rigidbody2D>();
+        Vector2 randomDirection = Random.insideUnitCircle.normalized;
+        heartRb.AddForce(randomDirection * popUpForce, ForceMode2D.Impulse);
+    }
 
     private void DestroyBox()
     {
@@ -66,8 +89,14 @@ public class BoxController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // Handle coin collection here (e.g., increase player's coin count)
-            Destroy(other.gameObject); // Destroy the coin when collected
+            if (other.name.Contains("Coin"))
+            {
+                // Handle coin collection here (e.g., increase player's coin count)
+            }
+            else if (other.name.Contains("Heart"))
+            {
+                // Handle heart collection here
+            }
         }
     }
 }
