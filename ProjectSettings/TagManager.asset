@@ -18,6 +18,8 @@ TagManager:
   - Tile
   - EnemyReverse
   - Coins
+  - Heart
+  - Heart2
   layers:
   - Default
   - TransparentFX

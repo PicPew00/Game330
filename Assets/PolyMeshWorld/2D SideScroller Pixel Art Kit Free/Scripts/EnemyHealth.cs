@@ -1,9 +1,17 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
     public int maxHealth = 100;
     private int currentHealth;
+
+    public float dropHeartProbability = 0.5f; // Probability of the enemy dropping a heart (0.0f to 1.0f)
+    public GameObject heartPrefab; // Reference to the heart prefab
+    public float heartLifetime = 5f; // Lifetime of the heart before it disappears
+
+    
+   
 
     private void Start()
     {
@@ -38,11 +46,23 @@ public class EnemyHealth : MonoBehaviour
         // Handle enemy death here
         Debug.Log("Enemy has been defeated.");
 
-        // Check if the script is being called
-        Debug.Log("Die() method called.");
+        // Randomize whether the enemy drops a heart
+        bool dropHeart = Random.value < dropHeartProbability;
 
-        // You can add more functionality like playing death animation, giving rewards, etc.
+        if (dropHeart)
+        {
+            // Spawn a heart
+            GameObject spawnedHeart = Instantiate(heartPrefab, transform.position, Quaternion.identity);
+
+            // You can add more functionality like playing death animation, giving rewards, etc.
+            Destroy(spawnedHeart, heartLifetime); // Destroy the heart after a certain amount of time
+        }
+
         Destroy(gameObject);
     }
+
+
+
+
 
 }

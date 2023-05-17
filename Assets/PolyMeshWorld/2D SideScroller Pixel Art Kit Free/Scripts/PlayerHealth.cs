@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
@@ -31,7 +32,17 @@ public class PlayerHealth : MonoBehaviour
         {
             TakeDamage(80);
         }
+        else if (collision.gameObject.CompareTag("Heart"))
+        {
+            Debug.Log("Heart collision detected!");
+            RestoreHealth(50); // Restore a fixed amount of health
+            Destroy(collision.gameObject); // Destroy the heart object on collision
+        }
     }
+
+
+
+
 
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -86,4 +97,20 @@ public class PlayerHealth : MonoBehaviour
         // Display the current coin count in the console
         Debug.Log("Current coin count: " + score);
     }
+
+
+
+    public void RestoreHealth(int amount)
+    {
+        currentHealth += amount;
+
+        // Ensure the current health doesn't exceed the maximum health
+        currentHealth = Mathf.Min(currentHealth, maxHealth);
+
+        // You can add more functionality like displaying health UI, playing a sound effect, etc.
+
+    }
+
+  
+
 }
