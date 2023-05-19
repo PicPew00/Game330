@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using DG.Tweening;
 
 public class BoxController : MonoBehaviour
 {
@@ -27,12 +28,13 @@ public class BoxController : MonoBehaviour
     private Vector3 previousItemPosition; // Track the position of the previously spawned item
     private bool spawnToRight = true; // Flag to alternate between left and right spawning
 
-    private void PopUpItem()
+    public void PopUpItem()
     {
         if (isHit && (numCoins > 0 || numHearts > 0))
         {
             float spawnOffset = spawnToRight ? 0.5f : -0.2f; // Adjust the gap between items as desired (20cm = 0.2f)
-            Vector3 spawnPosition = transform.position + new Vector3(spawnOffset, 0f, 0f);
+            
+            Vector3 spawnPosition = transform.position + new Vector3(0f, 1f, 0f);
 
             if (numCoins > 0 && numHearts > 0)
             {
@@ -64,17 +66,19 @@ public class BoxController : MonoBehaviour
     private void SpawnCoin(Vector3 spawnPosition)
     {
         GameObject coin = Instantiate(coinPrefab, spawnPosition, Quaternion.identity);
-        Rigidbody2D coinRb = coin.GetComponent<Rigidbody2D>();
-        Vector2 randomDirection = Random.insideUnitCircle.normalized;
-        coinRb.AddForce(randomDirection * popUpForce, ForceMode2D.Impulse);
+        coin.transform.DOLocalMoveY(0.5f, 1f);
+        //Rigidbody2D coinRb = coin.GetComponent<Rigidbody2D>();
+        //Vector2 randomDirection = Random.insideUnitCircle.normalized;
+        //coinRb.AddForce(randomDirection * popUpForce, ForceMode2D.Impulse);
     }
 
     private void SpawnHeart(Vector3 spawnPosition)
     {
         GameObject heart = Instantiate(heartPrefab, spawnPosition, Quaternion.identity);
-        Rigidbody2D heartRb = heart.GetComponent<Rigidbody2D>();
-        Vector2 randomDirection = Random.insideUnitCircle.normalized;
-        heartRb.AddForce(randomDirection * popUpForce, ForceMode2D.Impulse);
+        heart.transform.DOLocalMoveY(0.5f, 1f);
+    //    Rigidbody2D heartRb = heart.GetComponent<Rigidbody2D>();
+    //    Vector2 randomDirection = Random.insideUnitCircle.normalized;
+    //    heartRb.AddForce(randomDirection * popUpForce, ForceMode2D.Impulse);
     }
 
     private void DestroyBox()

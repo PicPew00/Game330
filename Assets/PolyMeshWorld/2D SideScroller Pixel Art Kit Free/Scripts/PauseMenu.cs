@@ -10,7 +10,7 @@ public class PauseMenu : MonoBehaviour
 
     private bool playerIsDead = false;
 
-    void Update()
+    void LateUpdate()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -33,15 +33,17 @@ public class PauseMenu : MonoBehaviour
     void Pause()
     {
         pauseMenuUI.SetActive(true);
+         GameIsPaused = true;
         Time.timeScale = 0f;
-        GameIsPaused = true;
+       
     }
 
     public void Resume()
     {
+        GameIsPaused = false;
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
-        GameIsPaused = false;
+       
     }
 
     public void Restart2()

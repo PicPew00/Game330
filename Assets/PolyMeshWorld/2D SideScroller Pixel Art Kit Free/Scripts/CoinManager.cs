@@ -7,6 +7,7 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class CoinManager : MonoBehaviour
 {
+    public AudioClip coinSound;
     private int score;
 
     private void Start()
@@ -14,23 +15,11 @@ public class CoinManager : MonoBehaviour
         score = 0;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void CoinInteraction(AudioSource audioSource)
     {
-        if (collision.gameObject.CompareTag("Coins"))
-        {
-            // Destroy the coin object
-            Destroy(collision.gameObject);
-
-            // Add 10 points to the score
-            score += 10;
-
-            // Display the current coin count in the console
-            Debug.Log("Current coin count: " + score);
-        }
+        score += 10;
+        audioSource.PlayOneShot(coinSound);
+        Destroy(this.gameObject);
     }
-
-
-
-
 
 }

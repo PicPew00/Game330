@@ -17,6 +17,10 @@ public class PlayerController : MonoBehaviour
     private float forwardInput;
     public float projectileSpeed = 10f;
 
+  
+    private AudioSource audioSource;
+    public AudioClip coinClip;
+
     public List<BoxCollider2D> boxCollider2Ds = new List<BoxCollider2D>();
 
 
@@ -32,7 +36,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
-
+        audioSource = GetComponent<AudioSource>();
         currentNumberOfJumpsToPerfom = 0;
     }
 
@@ -143,6 +147,10 @@ public class PlayerController : MonoBehaviour
             Debug.Log(" YOU ARE ON A LADDER");
             isOnLadder = true;
         }
+        if (collision.CompareTag("Coins"))
+        {
+            collision.GetComponent<CoinManager>().CoinInteraction(audioSource);
+        }
 
     }
 
@@ -160,15 +168,32 @@ public class PlayerController : MonoBehaviour
     {
         if(collision.collider.CompareTag("Ground"))
         {
-            if (boxCollider2Ds[1].IsTouching(collision.collider))
+            if (boxCollider2Ds[1].IsTouching(collision.collider)) // [1] legs collider
             {
                 isGrounded1 = true;
                 currentNumberOfJumpsToPerfom = 0;
             }
           
         }
-        
-            if (collision.gameObject.CompareTag("Obstacle"))
+      
+        if (boxCollider2Ds[0].IsTouching(collision.collider)) //[0] head collider
+        {
+            if(collision.collider.CompareTag("Coin"))
+            {
+                //Debug.Log(collision.collider.name);
+                collision.collider.GetComponent<SpriteRenderer>().color = new Color(0.6f, 0.6f, 0.6f, 1f);
+                //Instantiate(collision.collider.GetComponent<BoxController>().coinPrefab);
+
+                audioSource.PlayOneShot(coinClip);
+                collision.collider.GetComponent<BoxController>().PopUpItem();
+            }    
+            
+           
+        }
+
+       
+
+        if (collision.gameObject.CompareTag("Obstacle"))
             {
                 // Get the colliders involved in the collision
                 Collider2D characterCollider = GetComponent<Collider2D>();

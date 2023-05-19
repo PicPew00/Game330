@@ -20,6 +20,7 @@ TagManager:
   - Coins
   - Heart
   - Heart2
+  - AudioSourceObject
   layers:
   - Default
   - TransparentFX
