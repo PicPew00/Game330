@@ -21,6 +21,7 @@ TagManager:
   - Heart
   - Heart2
   - AudioSourceObject
+  - Victory
   layers:
   - Default
   - TransparentFX
