@@ -8,7 +8,7 @@ public class BoxController : MonoBehaviour
     public GameObject heartPrefab;
     public int numCoins = 2;
     public int numHearts = 1;
-    public float popUpForce = 5f;
+    public float popUpForce = 1f;
     public float popUpDelay = 0.1f;
     public float boxLifetime = 3f;
 
