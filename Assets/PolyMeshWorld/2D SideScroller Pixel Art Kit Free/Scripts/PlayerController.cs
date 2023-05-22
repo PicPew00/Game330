@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -151,6 +152,11 @@ public class PlayerController : MonoBehaviour
         {
             collision.GetComponent<CoinManager>().CoinInteraction(audioSource);
         }
+        if (collision.gameObject.CompareTag("Victory"))
+            {
+            Debug.Log("Victory Scene");
+            SceneManager.LoadScene("VictoryScene");
+            }
 
     }
 
@@ -214,7 +220,12 @@ public class PlayerController : MonoBehaviour
                 // Re-enable collision between character and obstacle colliders
                 Physics2D.IgnoreCollision(characterCollider, obstacleCollider, false);
             }
+
+       
         
+            
+        
+
 
 
 

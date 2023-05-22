@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/PolyMeshWorld/2D SideScroller Pixel Art Kit Free/Scenes/MainScene.unity
     guid: 42d9ead32808d674186c1f11a46d791b
+  - enabled: 1
+    path: Assets/PolyMeshWorld/2D SideScroller Pixel Art Kit Free/Scenes/VictoryScene.unity
+    guid: 9e519703d9f00ed4cb11e10ec980be0a
   m_configObjects: {}
