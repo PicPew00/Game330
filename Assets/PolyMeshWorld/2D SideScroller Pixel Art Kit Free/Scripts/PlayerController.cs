@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] int maxJumpsToPerfom;
@@ -156,10 +157,14 @@ public class PlayerController : MonoBehaviour
             {
             Debug.Log("Victory Scene");
             SceneManager.LoadScene("VictoryScene");
-            }
+           
+
+
+        }
+       
 
     }
-
+   
     private void ResetAllTrigger()
     {
         isOnLadder = false;

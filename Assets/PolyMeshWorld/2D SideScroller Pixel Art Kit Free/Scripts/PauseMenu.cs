@@ -51,7 +51,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         pauseMenuUI.SetActive(false);
         playerIsDead = false; // Reset the playerIsDead flag
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(1);
     }
 
     public void QuitGame()
