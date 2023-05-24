@@ -20,8 +20,12 @@ public class BoxController : MonoBehaviour
         if (!isHit)
         {
             isHit = true;
-            InvokeRepeating("PopUpItem", 0f, popUpDelay);
+           // InvokeRepeating("PopUpItem", 0f, popUpDelay);
+
+            Invoke("PopUpItem", popUpDelay);
+
             Invoke("DestroyBox", boxLifetime);
+
         }
     }
 
@@ -66,7 +70,12 @@ public class BoxController : MonoBehaviour
     private void SpawnCoin(Vector3 spawnPosition)
     {
         GameObject coin = Instantiate(coinPrefab, spawnPosition, Quaternion.identity);
-        coin.transform.DOLocalMoveY(0.5f, 1f);
+
+        float targetYDestination=coin.transform.position.y;
+
+        targetYDestination+= 0.5f;
+
+        coin.transform.DOLocalMoveY(targetYDestination, 1f);
         //Rigidbody2D coinRb = coin.GetComponent<Rigidbody2D>();
         //Vector2 randomDirection = Random.insideUnitCircle.normalized;
         //coinRb.AddForce(randomDirection * popUpForce, ForceMode2D.Impulse);
@@ -75,7 +84,13 @@ public class BoxController : MonoBehaviour
     private void SpawnHeart(Vector3 spawnPosition)
     {
         GameObject heart = Instantiate(heartPrefab, spawnPosition, Quaternion.identity);
-        heart.transform.DOLocalMoveY(0.5f, 1f);
+
+
+        float targetYDestination = heart.transform.position.y;
+
+        targetYDestination += 0.5f;
+
+        heart.transform.DOLocalMoveY(targetYDestination, 1f);
     //    Rigidbody2D heartRb = heart.GetComponent<Rigidbody2D>();
     //    Vector2 randomDirection = Random.insideUnitCircle.normalized;
     //    heartRb.AddForce(randomDirection * popUpForce, ForceMode2D.Impulse);
